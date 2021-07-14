@@ -100,7 +100,7 @@ def verify_answer():
     normalized_answer = answer.lower()
     normalized_user_answer = user_input.get().lower()
     correct = True
-    if normalized_user_answer in normalized_answer:
+    if normalized_user_answer in normalized_answer and len(normalized_user_answer) > 2:
         print('Correct')
         global score
         score += 1
