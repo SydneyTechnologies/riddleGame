@@ -36,6 +36,7 @@ for line in asset_file:
 def Pick_question():
     index = random.randint(0, len(game_dictionary))
     question_list = game_dictionary[index]
+    game_dictionary.remove(question_list)
     # The question_list is a list containing the question and the answer 
     raw_answer = question_list[1].replace(",", "", 1)
     raw_answer = raw_answer.replace(".", "")
@@ -70,7 +71,7 @@ def formatString(sentence, max):
 def verify_answer(real_answer, user_answer):
     normalized_answer = real_answer.lower()
     normalized_user_answer = user_answer.lower()
-    if normalized_user_answer not in normalized_answer:
+    if normalized_user_answer in normalized_answer:
         print('Correct')
         # then we increase the score or something
     print('i am working')
