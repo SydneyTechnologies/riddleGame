@@ -109,15 +109,17 @@ def verify_answer():
     if normalized_user_answer == normalized_answer:
         print('Correct')
         global score
-        score += 1
+        score += 10
         user_input.delete(0, END)
         scoreLabel.configure(text="Score: " + str(score))
-        # scoreTurtle.undo()
-        # scoreTurtle.write('SCORE: ' + str(score), move=False, font=['Courier', 16])
         writeAnswer(normalized_user_answer, correct)
         time.sleep(2)
         pen.clear()
         ans.clear()
+        if score >= 100: 
+            print("Game has been completed")
+            print("Replay button Created")
+            return
         gameLoop()
         # then we increase the score or something
     else:
@@ -178,7 +180,11 @@ btn = tkinter.Button(master = TK, text="Submit")
 btn.pack()
 btn.configure(command= verify_answer)
 
-
+def complete_game():
+    if score >= 100: 
+        print("Game has been completed")
+        print("Replay button Created")
+        return
 def hint_generator():
     global hint
     hint = hintGlobal
