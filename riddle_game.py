@@ -1,8 +1,9 @@
 import random
-from tkinter.constants import LEFT, RIGHT
+from tkinter.constants import BOTTOM, LEFT, RIGHT
 import pyttsx3
 import turtle
 import tkinter 
+from tkinter.ttk import *
 from datamuse import datamuse
 import time
 from requests.models import StreamConsumedError
@@ -34,7 +35,9 @@ ans = pen.clone()
 user_input_answer = "$"
 answer = ""
 hintGlobal = ""
+question = ""
 
+# style.configure('TkButton', font=('calibri', 20,'bold'), borderwidth = '2')
 
 # -- INITIALIZE GAME VOICE -- #
 def Init_voice():
@@ -132,6 +135,7 @@ def writeAnswer(answer, isCorrect):
 
 def gameLoop():
     riddle_list = Pick_question()
+    global question
     question = riddle_list[0]
     pen.goto(-100, 100)
     pen.color('black')
@@ -177,6 +181,17 @@ def hint_generator():
 hintBtn = tkinter.Button(master = TK, text="Generate Hint")
 hintBtn.pack(side=RIGHT)
 hintBtn.configure(command= hint_generator)
+
+
+def repeatQuestion():
+    engine.say(question)
+    engine.runAndWait()
+
+repeatBtn = tkinter.Button(master= TK, text="Repeat Question", bg="#6495ED")
+repeatBtn.pack(side=RIGHT)
+repeatBtn.configure(command= repeatQuestion)
+
+
 
 gameLoop()
 screen.mainloop()
