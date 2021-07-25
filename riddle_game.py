@@ -1,5 +1,5 @@
 import random
-from tkinter.constants import LEFT, RIGHT
+from tkinter.constants import END, FIRST, LAST, LEFT, RIGHT
 import pyttsx3
 import turtle
 import tkinter 
@@ -33,6 +33,7 @@ end_game = False
 ans = pen.clone()
 user_input_answer = "$"
 answer = ""
+trun_answer = ""
 hintGlobal = ""
 
 
@@ -65,10 +66,14 @@ def Pick_question():
     raw_answer = raw_answer.replace(".", "")
     # formatting answer to a single word
     x = raw_answer.split()
+    print(x)
+    print(raw_answer)
     primary_answer = x[len(x)-1]
+    print(primary_answer)
     hint_rhymes = api.words(rel_rhy = primary_answer, max = 5)
-    return [question_list[0], question_list[1], hint_rhymes]
+    return [question_list[0], question_list[1], hint_rhymes, primary_answer]
 
+    
 # Pick_question()
 print(game_dictionary[1])
 def formatString(sentence, max):
@@ -97,13 +102,15 @@ def formatString(sentence, max):
     return sentence_list
 
 def verify_answer():
-    normalized_answer = answer.lower()
+    normalized_answer = trun_answer.lower()
     normalized_user_answer = user_input.get().lower()
     correct = True
-    if normalized_user_answer in normalized_answer and len(normalized_user_answer) > 2:
+    # print(hintGlobal)
+    if normalized_user_answer == normalized_answer:
         print('Correct')
         global score
         score += 1
+        user_input.delete(0, END)
         scoreLabel.configure(text="Score: " + str(score))
         # scoreTurtle.undo()
         # scoreTurtle.write('SCORE: ' + str(score), move=False, font=['Courier', 16])
@@ -117,6 +124,13 @@ def verify_answer():
         correct = False
         writeAnswer(normalized_user_answer, correct)
 
+def enter_key_validate(event):
+    if user_input.get() == "":
+        return
+    else:
+        print(trun_answer)
+        print(user_input.get())
+        verify_answer()
 
 def writeAnswer(answer, isCorrect):
     y = pen.ycor()
@@ -142,6 +156,9 @@ def gameLoop():
         pen.goto(0, current_y + 14)
         print(new_question[i])
         pen.write(new_question[i], False, font=["Courier", 13], align='center')
+    
+    global trun_answer
+    trun_answer = riddle_list[3]
 
     global answer
     answer = riddle_list[1]
@@ -165,7 +182,7 @@ btn.configure(command= verify_answer)
 def hint_generator():
     global hint
     hint = hintGlobal
-    print(hint)
+    # print(hint)
     hintIndex = random.randint(0, 4)
     if hint == []:
         wordToSay = "Sorry, there are no hints for this question"
@@ -174,9 +191,11 @@ def hint_generator():
     engine.say(wordToSay)
     engine.runAndWait()
 
+
 hintBtn = tkinter.Button(master = TK, text="Generate Hint")
 hintBtn.pack(side=RIGHT)
 hintBtn.configure(command= hint_generator)
 
+TK.bind("<Return>", enter_key_validate)
 gameLoop()
 screen.mainloop()
