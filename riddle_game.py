@@ -6,6 +6,7 @@ import tkinter
 from datamuse import datamuse
 import time
 from requests.models import StreamConsumedError
+from something import removeCat
 # the code above is import the external libraries we need to make this game work 
 
 
@@ -109,7 +110,7 @@ def verify_answer():
     if normalized_user_answer == normalized_answer:
         print('Correct')
         global score
-        score += 10
+        score += 50
         user_input.delete(0, END)
         scoreLabel.configure(text="Score: " + str(score))
         writeAnswer(normalized_user_answer, correct)
@@ -119,6 +120,7 @@ def verify_answer():
         if score >= 100: 
             print("Game has been completed")
             print("Replay button Created")
+            GenericWrite("YOU HAVE COMPLETED THE GAME", completed=True)
             return
         gameLoop()
         # then we increase the score or something
@@ -145,6 +147,16 @@ def writeAnswer(answer, isCorrect):
         concat = " is wrong, start again"
     ans.write(answer + " " + concat, move= False, font=['Courier', 16], align='center')
 
+def GenericWrite(input_text: str, completed: bool):
+    if completed == True:
+        pen.goto(-100, 100)
+        pen.color('black')
+        pen.write(input_text)
+    else:
+        current_y = pen.ycor()
+        pen.goto(0, current_y + 14)
+        pen.write(input_text)
+
 
 def gameLoop():
     riddle_list = Pick_question()
@@ -161,14 +173,15 @@ def gameLoop():
     
     global trun_answer
     trun_answer = riddle_list[3]
+    GenericWrite(input_text=trun_answer, completed=False)
 
     global answer
     answer = riddle_list[1]
     global hintGlobal
     hintGlobal = riddle_list[2]
-    engine.say(question)
+    # engine.say(question)
     # engine.say("The answer is " + answer)
-    engine.runAndWait()
+    # engine.runAndWait()
 
     # user_input = screen.textinput("INPUT", "what am i?")
    
