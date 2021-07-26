@@ -1,6 +1,6 @@
 from tkinter import *
 from turtle import color
-
+from GameMechanics import InitializeRiddleList, RandomRiddleItem
 
 showMenuAll = True
 
@@ -22,8 +22,14 @@ def showMenuTitle(text, fontSize):
         242.0, 127.0,
         text=text,
         fill="white",
-        font= ("Calibri", int(fontSize))
+        font= ("Calibri", int(fontSize)),
+        tags="menu",
+        width=450
     )
+
+riddle_list = InitializeRiddleList()
+riddle_item = RandomRiddleItem(riddle_library=riddle_list)
+
 
 showMenuTitle("Riddle Game", 37.0)
 
@@ -34,13 +40,10 @@ def btnClicked():
     global showMenuAll
     showMenuAll = False
     print("clearing")
-    # if showMenuAll:
-    #     showMenuBtn()
-    #     showInstructions()
-    # else:
-    #     # tempBtn.delete()
     canvas.delete("menu")
-    # tempBtn.destroy()
+    showMenuTitle(riddle_item["question"], 12.0)
+    showEntry()
+
 
 def showMenuBtn():
     if showMenuAll == True:
@@ -87,5 +90,28 @@ def showInstructions():
 showMenuBtn()
 showInstructions()
 
+def showEntry():
+    entry = Entry(
+        borderwidth=0,
+        highlightthickness=0,
+        relief="flat"
+    )
+    entry.place(
+        x= 186, y= 300,
+        width=127,
+        height=30
+    )
+
+def showScore(score):
+    label = Label(
+        text="Score: " + str(score),
+        bg="#5d8fee",
+        fg="white"
+    )
+    label.place(
+        x = 430, y = 0 
+    )
+
+showScore(10)
 window.resizable(False, False)
 window.mainloop()
