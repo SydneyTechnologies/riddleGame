@@ -160,7 +160,7 @@ showScore(labelScore)
 
 def generateIndex():
     indexRand = random.randint(0, 5)
-    print(indexRand)
+    print(indexRand, riddle_item["shortened_answer"])
     return indexRand
 
 def submitBtn():
