@@ -31,11 +31,16 @@ def RandomRiddleItem(riddle_library: list):
 
 def _generateHint(answer: str):
     api = datamuse.Datamuse()
-    try:
-        if "/" or "\\" in answer:
-            print('weird symbol in answer')
-    except:
-        pass
+    # try:
+    #     if "/" or "\\" in answer:
+    #         print('weird symbol in answer')
+    # except:
+    #     pass
+    if "/" or "\\" in answer:
+        print('weird symbol in answer')
+        x = answer.replace("/", " ", 1)
+        x = x.replace("\\", " ", 1)
+        answer = x
     split_answer = answer.split()
     answer_head = split_answer[len(split_answer) - 1]
     hint = api.words(rel_rhy= answer_head, max = 5)
