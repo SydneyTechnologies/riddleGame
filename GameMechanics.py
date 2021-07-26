@@ -49,8 +49,3 @@ def verify_answer(user_input: Entry, shortened_answer: str, score: int, pen: Raw
         pen.clear()
         if score >= 100:
             return
-
-
-riddlelist = InitializeRiddleList()
-riddleitem = RandomRiddleItem(riddle_library=riddlelist)
-print(riddleitem)
