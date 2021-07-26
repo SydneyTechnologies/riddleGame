@@ -6,7 +6,7 @@ from turtle import RawTurtle
 from datamuse import datamuse
 import pyttsx3
 engine = pyttsx3.init()
-score = 0
+score = 50
 
 def InitializeRiddleList():
     riddle_bank = open("output.txt")
@@ -30,6 +30,8 @@ def RandomRiddleItem(riddle_library: list):
     hint_dictionary = _generateHint(riddle_answer)
     return {"question": riddle_question, "answer": riddle_answer, "shortened_answer": hint_dictionary[0], "hints": hint_dictionary[1]}
 
+
+
 def _generateHint(answer: str):
     api = datamuse.Datamuse()
     # try:
@@ -47,13 +49,13 @@ def _generateHint(answer: str):
     hint = api.words(rel_rhy= answer_head, max = 5)
     return [answer_head, hint]
 
-def verify_answer(user_input: Entry, shortened_answer: str, pen: RawTurtle, score_label: Label, read_aloud:bool):
-    user_input = user_input.get().lower()
-    shortened_answer = shortened_answer.lower()
+def verify_answer(user_input: Entry, shortened_answer: str, pen: RawTurtle, read_aloud:bool):
+    userInput = user_input.get().lower()
+    shortenedAnswer = shortened_answer.lower()
     result_text = ''
-    if user_input == shortened_answer:
+    if userInput == shortenedAnswer:
         global score
-        score += 50
+        score += 10
         user_input.delete(0, END)
         # score_label.configure(text="Score: " + str(score))
         # time.sleep(2)
