@@ -40,7 +40,7 @@ def btnClicked():
     # else:
     #     # tempBtn.delete()
     canvas.delete("menu")
-    tempBtn.destroy()
+    # tempBtn.destroy()
 
 def showMenuBtn():
     if showMenuAll == True:
@@ -56,15 +56,15 @@ def showMenuBtn():
         relief="flat",
         bg="#407CF3",
         fg="white",
-        # command= lambda:[btnFunc(), button.destroy()],
-        command=btnFunc,
+        command= lambda:[btnFunc(), button.destroy()],
+        # command=btnFunc,
     )
     button.place(
         x= 186, y= cordY,
         width=127,
         height=30
     )
-    return button
+    # return button
 
 
 def showInstructions():
@@ -83,7 +83,8 @@ def showInstructions():
         tags="menu"
     )
 
-tempBtn = showMenuBtn()
+# tempBtn = 
+showMenuBtn()
 showInstructions()
 
 window.resizable(False, False)
