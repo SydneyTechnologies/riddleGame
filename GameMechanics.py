@@ -1,9 +1,11 @@
 import random
 import time
-from tkinter import Entry, Label
+from tkinter import Entry, Label, Text
 from tkinter.constants import END
 from turtle import RawTurtle
 from datamuse import datamuse
+import pyttsx3
+engine = pyttsx3.init()
 
 def InitializeRiddleList():
     riddle_bank = open("output.txt")
@@ -11,6 +13,7 @@ def InitializeRiddleList():
     for line in riddle_bank:
         riddle = line.split("?")
         riddle_library.append(riddle)
+    _init_voice()
     return riddle_library
 
 def RandomRiddleItem(riddle_library: list):
@@ -38,15 +41,31 @@ def _generateHint(answer: str):
     hint = api.words(rel_rhy= answer_head, max = 5)
     return [answer_head, hint]
 
-def verify_answer(user_input: Entry, shortened_answer: str, score: int, pen: RawTurtle, score_label: Label):
+def verify_answer(user_input: Entry, shortened_answer: str, score: int, pen: RawTurtle, score_label: Label, read_aloud:bool):
     user_input = user_input.get().lower()
     shortened_answer = shortened_answer.lower()
+    result_text = ''
     if user_input == shortened_answer:
         score += 50
         user_input.delete(0, END)
         score_label.configure(text="Score: " + str(score))
-        time.sleep(2)
-        pen.clear()
+        # time.sleep(2)
+        result_text = "THAT IS CORRECT"
+        pen.write(result_text, move=False, align="center")
         if score >= 100:
-            return
+            result_text = "CONGRATULATIONS YOU HAVE COMPLETED THE GAME"
+            pen.write(result_text, move=False, align="center")
+    else:
+        result_text = "THAT IS INCORRECT"
+        pen.write(result_text, move=False, align="center")
 
+    if read_aloud:
+        engine.say(result_text)
+        engine.runAndWait()
+
+
+
+def _init_voice():
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[0].id)
+    engine.setProperty('rate', 175)
