@@ -1,6 +1,7 @@
 from tkinter import *
 from turtle import *
 from GameMechanics import *
+import random
 
 showMenuAll = True
 userInput = ""
@@ -92,14 +93,14 @@ def showMenuBtn():
 
 def showInstructions():
     canvas.create_text(
-        250.0, 375.0,
+        0, 150,
         text="HOW TO WIN:\n\nAnswer 10 riddles consecutively to win the game. Good luck!",
         fill="white",
         font=("Calibri", int(10.0)),
         tags="menu"
     )
     canvas.create_text(
-        250.0, 420.0,
+        0, 200,
         text="Made by Harith & Sydney",
         fill="white",
         font=("Calibri", int(10.0), "italic"),
@@ -146,7 +147,8 @@ def showHintBtn():
         text="Generate Hint",
         relief="flat",
         bg="#407CF3",
-        fg="white"
+        fg="white",
+        command= lambda:[readAloud(text="The answer rhymes with " + riddle_item["hints"][generateIndex()]["word"]), generateIndex()]
     )
     hint.place(
         x= 350, y= 400,
@@ -156,6 +158,10 @@ def showHintBtn():
 
 showScore(labelScore)
 
+def generateIndex():
+    indexRand = random.randint(0, 5)
+    print(indexRand)
+    return indexRand
 
 def submitBtn():
     submit = Button(

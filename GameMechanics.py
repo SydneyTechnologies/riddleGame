@@ -29,6 +29,8 @@ def RandomRiddleItem(riddle_library: list):
     hint_dictionary = _generateHint(riddle_answer)
     return {"question": riddle_question, "answer": riddle_answer, "shortened_answer": hint_dictionary[0], "hints": hint_dictionary[1]}
 
+
+
 def _generateHint(answer: str):
     api = datamuse.Datamuse()
     try:
