@@ -156,7 +156,7 @@ def showHintBtn():
         height=30
     )
 
-showScore()
+showScore(score)
 
 def generateIndex():
     indexRand = random.randint(0, 5)
@@ -171,7 +171,7 @@ def submitBtn():
         relief="flat",
         bg="#407CF3",
         fg="white",
-        command=lambda:[verify_answer(user_input=userInput, shortened_answer=riddle_item["shortened_answer"], score=labelScore, pen=pen, read_aloud=True)]
+        command=lambda:[verify_answer(user_input=userInput, shortened_answer=riddle_item["shortened_answer"], pen=pen, read_aloud=True)]
     )
     submit.place(
         x=186, y=350,
