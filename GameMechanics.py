@@ -67,6 +67,8 @@ def verify_answer(user_input: Entry, shortened_answer: str, score: int, pen: Raw
     if read_aloud:
         readAloud(result_text)
 
+    return score
+
 def readAloud(text:str):
     engine.say(text)
     engine.runAndWait()
