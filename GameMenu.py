@@ -156,7 +156,7 @@ def showHintBtn():
         height=30
     )
 
-showScore(labelScore)
+showScore()
 
 def generateIndex():
     indexRand = random.randint(0, 5)
