@@ -60,10 +60,11 @@ def verify_answer(user_input: Entry, shortened_answer: str, score: int, pen: Raw
         pen.write(result_text, move=False, align="center")
 
     if read_aloud:
-        engine.say(result_text)
-        engine.runAndWait()
+        readAloud(result_text)
 
-
+def readAloud(text:str):
+    engine.say(text)
+    engine.runAndWait()
 
 def _init_voice():
     voices = engine.getProperty('voices')
