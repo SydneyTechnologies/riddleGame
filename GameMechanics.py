@@ -41,14 +41,14 @@ def _generateHint(answer: str):
     hint = api.words(rel_rhy= answer_head, max = 5)
     return [answer_head, hint]
 
-def verify_answer(user_input: Entry, shortened_answer: str, score: int, pen: RawTurtle, score_label: Label, read_aloud:bool):
-    user_input = user_input.get().lower()
-    shortened_answer = shortened_answer.lower()
+def verify_answer(user_input: Entry, shortened_answer: str, score: int, pen: RawTurtle, read_aloud:bool):
+    userInput = user_input.get().lower()
+    shortenedAnswer = shortened_answer.lower()
     result_text = ''
-    if user_input == shortened_answer:
-        score += 50
+    if userInput == shortenedAnswer:
+        score += 10
         user_input.delete(0, END)
-        score_label.configure(text="Score: " + str(score))
+        # score_label.configure(text="Score: " + str(score))
         # time.sleep(2)
         result_text = "THAT IS CORRECT"
         pen.write(result_text, move=False, align="center")

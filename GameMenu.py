@@ -1,8 +1,10 @@
 from tkinter import *
-from turtle import color
-from GameMechanics import InitializeRiddleList, RandomRiddleItem
+from turtle import *
+from GameMechanics import *
 
 showMenuAll = True
+userInput = ""
+labelScore = 0
 
 window = Tk()
 window.geometry("500x450")
@@ -16,10 +18,23 @@ canvas = Canvas(
     highlightthickness=0
 )
 canvas.place(x= 0, y= 0)
+turtleCanvas = TurtleScreen(canvas)
+turtleCanvas.bgcolor("#5d8fee")
+pen = RawTurtle(turtleCanvas)
+pen.hideturtle()
 
 def showMenuTitle(text, fontSize):
     canvas.create_text(
-        242.0, 127.0,
+        10, -150,
+        text=text,
+        fill="white",
+        font= ("Calibri", int(fontSize)),
+        tags="menu",
+        width=450
+    )
+def showQuestion(text, fontSize):
+    canvas.create_text(
+        10, -150,
         text=text,
         fill="white",
         font= ("Calibri", int(fontSize)),
@@ -41,8 +56,13 @@ def btnClicked():
     showMenuAll = False
     print("clearing")
     canvas.delete("menu")
-    showMenuTitle(riddle_item["question"], 12.0)
-    showEntry()
+    showQuestion(riddle_item["question"], 12.0)
+    global userInput
+    userInput = showEntry()
+    submitBtn()
+    showHintBtn()
+    userInput.bind("<Button-1>", clearPlaceholder)
+
 
 
 def showMenuBtn():
@@ -101,6 +121,13 @@ def showEntry():
         width=127,
         height=30
     )
+    entry.insert(0, "Enter your answer here")
+    return entry
+
+
+def clearPlaceholder(e):
+    userInput.delete(0, "end")
+
 
 def showScore(score):
     label = Label(
@@ -112,6 +139,42 @@ def showScore(score):
         x = 430, y = 0 
     )
 
-showScore(10)
-window.resizable(False, False)
+def showHintBtn():
+    hint = Button(
+        borderwidth=0,
+        highlightthickness=0,
+        text="Generate Hint",
+        relief="flat",
+        bg="#407CF3",
+        fg="white"
+    )
+    hint.place(
+        x= 350, y= 400,
+        width=107,
+        height=30
+    )
+
+showScore(labelScore)
+
+
+def submitBtn():
+    submit = Button(
+        borderwidth=0,
+        highlightthickness=0,
+        text="Submit",
+        relief="flat",
+        bg="#407CF3",
+        fg="white",
+        command=lambda:[verify_answer(user_input=userInput, shortened_answer=riddle_item["shortened_answer"], score=labelScore, pen=pen, read_aloud=True)]
+    )
+    submit.place(
+        x=186, y=350,
+        width=127,
+        height=30
+    )
+
+
+
+
+window.resizable()
 window.mainloop()
